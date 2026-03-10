@@ -4,11 +4,12 @@
 *.so
 
 # IDE system files
-.idea
+.idea/
 .vscode
 
 # vendoring cache directory
 .cache
 
 # Go workspace files
-.env.override
+
+.env

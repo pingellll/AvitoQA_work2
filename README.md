@@ -1,54 +1,56 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/STkXXmcw)
-# API-тесты для проекта https://testboard.avito.com/
+### Запуск тестов
 
-## Полезные ссылки
-
-1. [Swagger-спецификация](https://testboard.avito.com/swagger/index.html)
-2. [Техническое задание](https://docs.google.com/document/d/1IZ9SxEcePoQT6lyEmukycp1qNok4HZtok73UQnPwKSA/edit?usp=sharing)
-3. [Библиотека для написания API-тестов](https://github.com/steinfletcher/apitest)
-4. [Мощная библиотека анализа JSON для Go](https://github.com/tidwall/gjson)
-
-## Запуск тестов
-
-1. Установите любое IDE для разработки: [Jetbrains GoLand](https://www.jetbrains.com/ru-ru/go/) (Платное или по студенческой лицензии), [VS Code](https://code.visualstudio.com/) (бесплатное).
-2. Установите [Git](https://git-scm.com/install/) на компьютер
-3. [Установите](https://go.dev/doc/install) Go версии 1.25.1
-4. [Настройте](https://docs.github.com/ru/authentication/connecting-to-github-with-ssh) доступ к своему Github-аккаунту
-   по SSH-ключу.
-5. Склонируйте себе репозиторий: `git clone <путь к вашему репозиторию>`
-6. Подтяните необходимые зависимости через команду в корне проекта:
+#### 1) Установка зависимостей
+В корне проекта выполните:
 
 ```bash
-   go get -u -v -t all
+go mod download
 ```
 
-7. В файле .env.override (создайте его в корне, если нет) выставьте правильные значения для переменных окружения:
-   `TEST_LOGIN` и `TEST_PASSWORD`
-8. Для запуска всех тестов достаточно выполнить команду в корне проекта:
+#### 2) Настройка переменных окружения
+Проект использует файл `.env` в корне репозитория (рядом с `go.mod`).
 
-```bash
-  go test -v ./...
+Убедитесь, что в `.env` заданы переменные:
+
+```env
+API_URL=https://testboard.avito.com/api/v1
+TEST_LOGIN=your_email@example.com
+TEST_PASSWORD=your_password
+DEBUG=false
 ```
 
-9. Отдельный тест можно запустить командой:
+#### 3) Запуск всех тестов
+Из корня проекта:
 
 ```bash
-  go test <путь до go-файла с тестом>
+go test -v -count=1 ./...
 ```
 
-> **_Windows:_** Все вышеперечисленные команды необходимо выполнять в **powershell** оболочке
->
-
-## Логирование
-
-Для включения логирования request/response в консоль: выставьте переменную окружения `DEBUG=true` в
-`.env.override`
-
-## Запуск линтера
-
-1. Установить приложение [golangci-lint](https://golangci-lint.run/docs/welcome/install/local/)
-2. Запуск линтера (из корня репозитория):
+#### 4) Запуск конкретного пакета/сценария
+Только сценарии объявлений:
 
 ```bash
-  golangci-lint run
+go test -v ./tests/scenarios/advertisement
+```
+
+Только сценарии профиля:
+
+```bash
+go test -v ./tests/scenarios/myAdvertisement
+```
+
+#### 5) Windows (PowerShell)
+Команды те же — запускать из PowerShell в корне проекта:
+
+```powershell
+go test -v ./...
+```
+
+Если переменные из `.env` не подхватываются, можно временно задать их прямо в PowerShell:
+
+```powershell
+$env:API_URL="https://testboard.avito.com/api/v1&quot;
+$env:TEST_LOGIN="your_email@example.com"
+$env:TEST_PASSWORD="your_password"
+go test -v ./...
 ```

@@ -31,7 +31,7 @@ func GetRunner() *ApiTest {
 	return New()
 }
 
-// Auth Установка Bearer token-а для прохождения авторизации на приватные ручки
+// Auth Установка Bearer токена для прохождения авторизации на приватные ручки
 func (at *ApiTest) Auth(token string) *ApiTest {
 	at.token = token
 	return at
@@ -39,7 +39,7 @@ func (at *ApiTest) Auth(token string) *ApiTest {
 
 func (at *ApiTest) Create() *apitest.APITest {
 	apitestNew := apitest.New().EnableNetworking()
-	if os.Getenv("DEBUG") == "true" {
+	if os.Getenv("DEBUG") == "true" && os.Getenv("CI") != "true" {
 		apitestNew = apitestNew.Debug()
 	}
 	return apitestNew.

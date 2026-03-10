@@ -12,7 +12,6 @@ import (
 	"api-tests-template/internal/managers/auth"
 	"api-tests-template/internal/managers/auth/models"
 	"api-tests-template/internal/managers/myAdvertisements"
-
 	base "api-tests-template/tests"
 )
 
@@ -32,11 +31,6 @@ func (s *TestSuite) SetupSuite() {
 	s.loginData = auth.Login(s.T(), os.Getenv("TEST_LOGIN"), os.Getenv("TEST_PASSWORD"))
 }
 
-func (s *TestSuite) TearDownTest() {
-	base.TearDownSuite()
-}
-
-// Positive: Проверяем получение собственных объявлений в профиле
 func (s *TestSuite) TestGetMyAdvertisementsPositive() {
 	var advertisementsBody string
 	s.Run("Получаем список собственных объявлений", func() {
@@ -63,7 +57,6 @@ func (s *TestSuite) TestGetMyAdvertisementsPositive() {
 	})
 }
 
-// Negative: Проверяем 401 ошибку при попытке получить собственные объявления без токена
 func (s *TestSuite) TestGetMyAdvertisementsIncorrectToken() {
 	var advertisementsBody string
 	s.Run("Получаем список собственных объявлений с неправильным авторизационным токеном", func() {
